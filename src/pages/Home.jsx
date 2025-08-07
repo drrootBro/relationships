@@ -15,7 +15,7 @@ export default function Home() {
         <blockquote style={styles.quote}>
           “他不是不爱你，而是他从未学会如何在亲密中表达欲望。”
         </blockquote>
-        <audio controls src="/audio/sexenergy.mp3" style={styles.audio} />
+        <audio controls src="/audio/mindsetoflove.mp3" style={styles.audio} />
       </section>
 
       <section style={styles.section}>
