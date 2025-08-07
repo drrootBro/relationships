@@ -11,9 +11,9 @@ export default function Home() {
 
       <section style={styles.section}>
         <h2>🎧 今日音频推荐</h2>
-        <p>为什么丈夫爱妻子还去找小姐</p>
+        <p>为什么很多人相爱的人总吵架</p>
         <blockquote style={styles.quote}>
-          “他不是不爱你，而是他从未学会如何在亲密中表达欲望。”
+          “不是不爱对方，而是你们从未学会如何保持很好的爱情心态。”
         </blockquote>
         <audio controls src="/audio/mindsetoflove.mp3" style={styles.audio} />
       </section>
