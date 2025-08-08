@@ -9,17 +9,24 @@ export default function ChatBox() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    const input = userInput.toLowerCase();
 
-    const matchedKeyword = chatPrompts.find((keyword) =>
-      userInput.toLowerCase().includes(keyword.toLowerCase())
-    );
+    let matchedKey = null;
 
-    if (matchedKeyword) {
-      const matchedResponse = audioData[matchedKeyword];
+    // 遍历关键词组，进行模糊匹配
+    for (const [key, synonyms] of Object.entries(chatPrompts)) {
+      if (synonyms.some((word) => input.includes(word.toLowerCase()))) {
+        matchedKey = key;
+        break;
+      }
+    }
+
+    if (matchedKey) {
+      const matchedResponse = audioData[matchedKey];
       setResponse(matchedResponse.text);
       setAudioSrc(matchedResponse.audio);
     } else {
-      setResponse('🤔 抱歉，我暂时无法识别你的问题。请尝试使用其他关键词。');
+      setResponse("🧠 我听懂了你的问题，但目前还没有对应的内容。我们正在持续更新中！");
       setAudioSrc(null);
     }
 
@@ -61,3 +68,4 @@ export default function ChatBox() {
     </div>
   );
 }
+
