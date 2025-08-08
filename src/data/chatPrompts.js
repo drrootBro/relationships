@@ -1,4 +1,9 @@
-export const triggerKeywords = [
-  "老婆不愿意", "她对我没兴趣", "我们没性生活", "她说她没感觉",
-  "她是不是不爱我了", "她性冷淡", "婚姻没有性", "她拒绝我"
+const chatPrompts = [
+  "不离婚也不做爱",
+  "离婚",
+  "做爱",
+  "分居",
+  "冷战",
 ];
+
+export default chatPrompts;
