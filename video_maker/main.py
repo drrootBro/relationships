@@ -15,6 +15,7 @@ from video_maker.ffmpeg_concat import (
 )
 from video_maker.render_slides import render_slide
 from video_maker.tts import generate_tts
+from video_maker.visual_mode.builder import build_visual_video
 
 DEFAULT_FOOTER = "Dr. RootBro — Clinical Audit Series"
 
@@ -89,7 +90,31 @@ def build_video(args: argparse.Namespace) -> None:
 
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(description="Generate an MP4 video from slide JSON.")
-    parser.add_argument("--script", required=True, help="Path to slide JSON script")
+    parser.add_argument(
+        "--mode",
+        choices=["text", "visual2video"],
+        default="text",
+        help="Select text-driven or visual slide mode",
+    )
+    parser.add_argument("--script", help="Path to slide JSON script")
+    parser.add_argument(
+        "--visual-script",
+        help="Path to visual mode script JSON (images + notes + narration)",
+    )
+    parser.add_argument(
+        "--images",
+        nargs="*",
+        help="Ordered list of image paths for visual mode",
+    )
+    parser.add_argument(
+        "--notes",
+        nargs="*",
+        help="Ordered list of notes for visual mode (must align to images)",
+    )
+    parser.add_argument(
+        "--save-visual-script",
+        help="Write generated visual script JSON for editing before rendering",
+    )
     parser.add_argument("--out", required=True, help="Output MP4 path")
     parser.add_argument("--size", type=parse_size, default=(1280, 720), help="WIDTHxHEIGHT")
     parser.add_argument("--bg", help="Optional background image path")
@@ -107,7 +132,12 @@ def main() -> int:
     parser = build_parser()
     args = parser.parse_args()
     try:
-        build_video(args)
+        if args.mode == "visual2video":
+            build_visual_video(args)
+        else:
+            if not args.script:
+                raise ValueError("--script is required when mode is 'text'")
+            build_video(args)
     except FFmpegMissingError as exc:
         print(str(exc), file=sys.stderr)
         return 1
